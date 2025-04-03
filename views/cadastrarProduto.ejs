@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Produto</title>
+</head>
+<body>
+  <h1>Cadastro de Produto</h1>
+  <form id="produtoForm">
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" name="nome"><br><br>
+
+    <label for="preco">Preço:</label><br>
+    <input type="number" id="preco" name="preco"><br><br>
+
+    <label for="estoque">Estoque:</label><br>
+    <input type="number" id="estoque" name="estoque"><br><br>
+
+    <button type="button" onclick="cadastrarProduto()">Cadastrar</button>
+  </form>
+
+  <script>
+    async function cadastrarProduto() {
+      const nome = document.getElementById('nome').value;
+      const preco = document.getElementById('preco').value;
+      const estoque = document.getElementById('estoque').value;
+
+      const produto = { nome, preco, estoque };
+
+      try {
+        const response = await fetch('/produtos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(produto)
+        });
+
+        if (response.ok) {
+          alert('Produto cadastrado com sucesso!');
+          document.getElementById('produtoForm').reset();
+        } else {
+          alert('Erro ao cadastrar produto.');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao cadastrar produto.');
+      }
+    }
+  </script>
+</body>
+</html>
