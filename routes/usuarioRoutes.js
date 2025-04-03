@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const UserController = require('../controllers/UserController');
+const UsuarioController = require('../controllers/UsuarioController');
 
-router.get('/usuarios', UserController.getAll);
-router.post('/usuarios', UserController.create);
+console.log("✅ Rotas de usuário carregadas");
+
+router.get('/usuarios', UsuarioController.getAll);
+router.post('/usuarios', UsuarioController.create);
 
 module.exports = router;
