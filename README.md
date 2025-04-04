@@ -48,3 +48,5 @@ Produtos:
 O Sequelize foi configurado para tratar essas validações antes de inserir ou atualizar registros no banco.
 
 Testes com Postman:
+
+[Teste com Postman.docx](https://github.com/user-attachments/files/19598078/Teste.com.Postman.docx)
