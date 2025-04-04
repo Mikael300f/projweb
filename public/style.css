@@ -1,0 +1,183 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+  }
+  
+  header {
+    background-color: #005f73;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  header h1 {
+    margin-bottom: 10px;
+  }
+  
+  header nav {
+    display: flex;
+    gap: 10px;
+  }
+  
+  header nav button {
+    background-color: #94d2bd;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  
+  header nav button:hover {
+    background-color: #52b69a;
+    color: white;
+  }
+  
+  main {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input,
+  select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+  }
+  
+  input:invalid {
+    border-color: red;
+  }
+  
+  button[type="submit"] {
+    background-color: #0a9396;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #007f83;
+  }
+  
+  .mensagem {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #dc2626;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  thead {
+    background-color: #e0e0e0;
+  }
+  
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .acoes {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  
+  .acoes button {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .acoes .editar {
+    background-color: #fbbf24;
+    color: #333;
+  }
+  
+  .acoes .editar:hover {
+    background-color: #f59e0b;
+  }
+  
+  .acoes .remover {
+    background-color: #ef4444;
+    color: white;
+  }
+  
+  .acoes .remover:hover {
+    background-color: #dc2626;
+  }
+  
+  .acoes .salvar {
+    background-color: #22c55e;
+    color: white;
+  }
+  
+  .acoes .salvar:hover {
+    background-color: #16a34a;
+  }
+  
+  .acoes .cancelar {
+    background-color: #9ca3af;
+    color: white;
+  }
+  
+  .acoes .cancelar:hover {
+    background-color: #6b7280;
+  }
+  
+  /* Input inline dentro da tabela */
+  td input[type="text"],
+  td input[type="email"],
+  td input[type="number"] {
+    width: 100%;
+    font-size: 1rem;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  

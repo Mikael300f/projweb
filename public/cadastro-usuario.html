@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Usuário</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Cadastrar Usuário</h1>
+    <nav>
+      <button onclick="location.href='index.html'">Voltar à Home</button>
+    </nav>
+  </header>
+
+  <main>
+    <form id="form-usuario">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" maxlength="50" required />
+
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" minlength="6" required />
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <div id="mensagem" class="mensagem"></div>
+  </main>
+
+  <script>
+    document.getElementById("form-usuario").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value;
+
+      const mensagem = document.getElementById("mensagem");
+      mensagem.textContent = "";
+
+      if (nome.length < 3) {
+        mensagem.textContent = "O nome do usuário deve ter no mínimo 3 caracteres.";
+        return;
+      }
+
+      if (!email.includes("@")) {
+        mensagem.textContent = "Informe um e-mail válido.";
+        return;
+      }
+
+      if (senha.length < 6) {
+        mensagem.textContent = "A senha deve ter pelo menos 6 caracteres.";
+        return;
+      }
+
+      try {
+        const res = await fetch("/usuarios", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, email, senha }),
+        });
+
+        if (res.ok) {
+          mensagem.textContent = "✅ Usuário cadastrado com sucesso!";
+          document.getElementById("form-usuario").reset();
+        } else {
+          const data = await res.json();
+          mensagem.textContent = `Erro: ${data.error || "Erro ao cadastrar usuário"}`;
+        }
+      } catch (error) {
+        mensagem.textContent = "Erro na requisição.";
+      }
+    });
+  </script>
+</body>
+</html>
