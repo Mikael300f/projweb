@@ -1,11 +1,17 @@
 {
+<<<<<<< HEAD
   "name": "projeto-web",
   "version": "1.0.0",
   "description": "",
+=======
+  "name": "projweb",
+  "version": "1.0.0",
+>>>>>>> main
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+<<<<<<< HEAD
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -13,6 +19,23 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+=======
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mikael300f/projweb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mikael300f/projweb/issues"
+  },
+  "homepage": "https://github.com/Mikael300f/projweb#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+>>>>>>> main
     "express": "^5.1.0",
     "mysql2": "^3.14.0",
     "sequelize": "^6.37.7"

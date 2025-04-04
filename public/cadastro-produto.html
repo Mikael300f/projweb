@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Produto</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Cadastrar Produto</h1>
+    <nav>
+      <button onclick="location.href='index.html'">Voltar à Home</button>
+    </nav>
+  </header>
+
+  <main>
+    <form id="form-produto">
+      <label for="nome">Nome do Produto:</label>
+      <input type="text" id="nome" name="nome" maxlength="50" required />
+
+      <label for="preco">Preço (R$):</label>
+      <input type="text" id="preco" name="preco" placeholder="0,00" required />
+
+      <label for="estoque">Estoque:</label>
+      <input type="number" id="estoque" name="estoque" min="0" required />
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <div id="mensagem" class="mensagem"></div>
+  </main>
+
+  <script>
+    const precoInput = document.getElementById("preco");
+    let valorAtual = "";
+
+    precoInput.addEventListener("input", () => {
+      let valor = precoInput.value.replace(/\D/g, "");
+      if (valor.length < 3) valor = valor.padStart(3, "0");
+
+      const reais = valor.slice(0, -2);
+      const centavos = valor.slice(-2);
+
+      precoInput.value = `${parseInt(reais)}.${centavos}`.replace(".", ",");
+    });
+
+    document.getElementById("form-produto").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const nome = document.getElementById("nome").value.trim();
+      const preco = parseFloat(precoInput.value.replace(",", "."));
+      const estoque = parseInt(document.getElementById("estoque").value);
+
+      const mensagem = document.getElementById("mensagem");
+      mensagem.textContent = "";
+
+      if (nome.length < 3) {
+        mensagem.textContent = "O nome do produto deve ter no mínimo 3 caracteres.";
+        return;
+      }
+
+      if (isNaN(preco) || preco <= 0) {
+        mensagem.textContent = "O preço deve ser um valor positivo.";
+        return;
+      }
+
+      if (isNaN(estoque) || estoque < 0) {
+        mensagem.textContent = "O estoque deve ser um número inteiro maior ou igual a zero.";
+        return;
+      }
+
+      try {
+        const res = await fetch("/produtos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, preco, estoque }),
+        });
+
+        if (res.ok) {
+          mensagem.textContent = "✅ Produto cadastrado com sucesso!";
+          document.getElementById("form-produto").reset();
+          precoInput.value = "0,00";
+        } else {
+          const data = await res.json();
+          mensagem.textContent = `Erro: ${data.error || "Erro ao cadastrar produto"}`;
+        }
+      } catch (error) {
+        mensagem.textContent = "Erro na requisição.";
+      }
+    });
+  </script>
+</body>
+</html>

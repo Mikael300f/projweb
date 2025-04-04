@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerenciamento de Produtos e Usuários</title>
@@ -96,3 +97,57 @@
     </script>
 </body>
 </html>
+=======
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Homepage - Produtos e Usuários</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body onload="carregarUsuarios(); carregarProdutos();">
+  <header>
+    <h1>Gerenciamento de Produtos e Usuários</h1>
+    <nav>
+      <button onclick="location.href='cadastro-produto.html'">Cadastrar Produto</button>
+      <button onclick="location.href='cadastro-usuario.html'">Cadastrar Usuário</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="produtos">
+      <h2>Produtos</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="lista-produtos">
+        </tbody>
+      </table>
+    </section>
+
+    <section id="usuarios">
+      <h2>Usuários</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="lista-usuarios"></tbody>
+      </table>
+      
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+>>>>>>> main
