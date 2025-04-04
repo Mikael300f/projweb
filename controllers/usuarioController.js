@@ -1,10 +1,8 @@
 const usuarioModel = require('../models/usuarioModel');
 
-// Função de validação
 function validateUsuario(usuario) {
   const { nome, idade } = usuario;
   
-  // Validações de campos obrigatórios
   if (nome.length < 3) {
     throw new Error('O nome do usuário deve ter no mínimo 3 caracteres.');
   }
@@ -38,12 +36,11 @@ async function getUsuarioById(req, res) {
 async function createUsuario(req, res) {
   const { nome, idade } = req.body;
   try {
-    // Valida os dados antes de criar o usuário
     validateUsuario({ nome, idade });
     const usuarioId = await usuarioModel.createUsuario({ nome, idade });
     res.status(201).json({ id: usuarioId, nome, idade });
   } catch (err) {
-    res.status(400).json({ error: err.message }); // Retorna erro se a validação falhar
+    res.status(400).json({ error: err.message });
   }
 }
 
@@ -51,12 +48,11 @@ async function updateUsuario(req, res) {
   const { id } = req.params;
   const { nome, idade } = req.body;
   try {
-    // Valida os dados antes de atualizar o usuário
     validateUsuario({ nome, idade });
     await usuarioModel.updateUsuario(id, { nome, idade });
     res.status(200).json({ id, nome, idade });
   } catch (err) {
-    res.status(400).json({ error: err.message }); // Retorna erro se a validação falhar
+    res.status(400).json({ error: err.message });
   }
 }
 
@@ -64,7 +60,7 @@ async function deleteUsuario(req, res) {
   const { id } = req.params;
   try {
     await usuarioModel.deleteUsuario(id);
-    res.status(204).end(); // Usuário excluído com sucesso
+    res.status(204).end();
   } catch (err) {
     res.status(500).json({ error: 'Erro ao excluir usuário' });
   }
