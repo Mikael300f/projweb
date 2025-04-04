@@ -11,14 +11,14 @@ async function getUsuarioById(id) {
 }
 
 async function createUsuario(usuario) {
-  const { nome, preco, estoque } = usuario;
+  const { nome, idade} = usuario;
   const [result] = await pool.query('INSERT INTO USUARIOS (nome, idade) VALUES (?, ?)', [nome, idade]);
   return result.insertId;
 }
 
 async function updateUsuario(id, usuario) {
   const { nome, idade } = usuario;
-  await pool.query('UPDATE USUARIOS SET nome = ? WHERE id = ?', [nome, idade, id]);
+  await pool.query('UPDATE USUARIOS SET nome = ?, idade = ?, WHERE id = ?', [nome, idade, id]);
 }
 
 async function deleteUsuario(id) {

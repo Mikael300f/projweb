@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Usuário</title>
+</head>
+<body>
+  <h1>Cadastro de Usuário</h1>
+  <form id="usuarioForm">
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" name="nome"><br><br>
+
+    <label for="idade">Idade:</label><br>
+    <input type="number" id="idade" name="idade"><br><br>
+
+    <button type="button" onclick="cadastrarUsuario()">Cadastrar</button>
+  </form>
+
+  <script>
+    async function cadastrarUsuario() {
+      const nome = document.getElementById('nome').value;
+      const idade = document.getElementById('idade').value;
+
+      const usuario = { nome, idade };
+
+      try {
+        const response = await fetch('/usuario', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(usuario)
+        });
+
+        if (response.ok) {
+          alert('Usuário cadastrado com sucesso!');
+          document.getElementById('usuarioForm').reset();
+        } else {
+          alert('Erro ao cadastrar usuário.');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao cadastrar usuário.');
+      }
+    }
+  </script>
+</body>
+</html>

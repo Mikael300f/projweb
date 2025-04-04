@@ -1,4 +1,4 @@
-const produtoModel = require('../model/usuarioModel');
+const usuarioModel = require('../model/usuarioModel');
 
 async function getAllUsuario(req, res) {
   const usuario = await produtoModel.getAllUsuario();
