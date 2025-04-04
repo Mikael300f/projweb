@@ -56,6 +56,30 @@ Solução: Implementamos uma verificação no controller antes de excluir um reg
 4 - Erro na definição de senha do banco de dados - O banco de dados MySQL rejeitava a conexão devido a problemas na senha do usuário configurado, oque fazia o terminar uma mensagem de erro de credenciais e falha de conexão.
 Solução: Reinstalamos as dependências do Node.js, corrigimos as credenciais no arquivo .env e garantimos que o servidor MySQL estava rodando corretamente. Também ajustamos os scripts para reiniciar a aplicação corretamente. 
 
+Validação dos Dados:
+Para garantir a integridade dos dados, foram aplicadas as seguintes regras:
+
+Usuários:
+
+--Nome deve ter pelo menos 3 caracteres.
+
+--Email deve ser válido e único.
+
+Produtos:
+
+--Nome deve ter pelo menos 3 caracteres.
+
+--Preço deve ser um valor positivo.
+
+--Estoque deve ser um número inteiro maior ou igual a zero.
+
+O Sequelize foi configurado para tratar essas validações antes de inserir ou atualizar registros no banco.
+
+Testes com Postman:
+
+[Teste com Postman.docx](https://github.com/user-attachments/files/19598078/Teste.com.Postman.docx)
+=======
+ 
 
 REFERÊNCIAS: 
 PEREIRA, Caio Ribeiro. Livro de NodeJS. [S.l.]: Casa
