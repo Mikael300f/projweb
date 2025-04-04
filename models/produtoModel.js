@@ -1,77 +1,77 @@
-const pool = require('../config/database');
+const { DataTypes, QueryTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
 
-// Listar todos os produtos
+const Produto = sequelize.define('Produto', {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  preco: {
+    type: DataTypes.FLOAT,
+    allowNull: false
+  },
+  estoque: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
+}, {
+  tableName: 'produtos',
+  timestamps: false
+});
+
 async function getAllProdutos() {
   try {
-    const [rows] = await pool.query('SELECT * FROM produtos');
-    return rows;
+    return await Produto.findAll();
   } catch (err) {
-    console.error('Erro ao consultar produtos no banco de dados:', err);
-    throw new Error('Erro ao consultar produtos no banco de dados');
+    console.error('Erro ao consultar produtos:', err);
+    throw new Error('Erro ao consultar produtos');
   }
 }
-
-const { QueryTypes } = require('sequelize');  // Importe o QueryTypes
-const sequelize = require('../config/database');  // Certifique-se de que está chamando a conexão corretamente
 
 async function getProdutoById(id) {
   try {
-    const produto = await sequelize.query(
-      'SELECT * FROM produtos WHERE id = :id',
-      { replacements: { id }, type: QueryTypes.SELECT }
-    );
-
-    console.log('Resultado da consulta:', produto);  // Verifique o resultado
-
-    if (!produto.length) {
-      return null;
-    }
-    return produto[0];
+    const produto = await Produto.findByPk(id);
+    return produto ? produto : null;
   } catch (err) {
-    console.error(`Erro ao consultar produto com ID ${id}:`, err);
-    throw new Error('Erro ao consultar produto');
+    console.error(`Erro ao buscar produto com ID ${id}:`, err);
+    throw new Error('Erro ao buscar produto');
   }
 }
 
-
-async function createProduto(produto) {
-  const { nome, preco, estoque } = produto;
+async function createProduto({ nome, preco, estoque }) {
   try {
-    console.log('Criando produto no banco:', produto);  // Log antes da query
-    const [result] = await pool.execute(
-      'INSERT INTO produtos (nome, preco, estoque) VALUES (?, ?, ?)',
-      [nome, preco, estoque]
-    );
-    return result.insertId;  // Retorna o ID do novo produto
+    console.log('📦 Criando produto:', { nome, preco, estoque });
+    const produto = await Produto.create({ nome, preco, estoque });
+    return produto;
   } catch (err) {
-    console.error('Erro ao criar produto no banco:', err);
-    throw new Error('Erro ao criar produto no banco');
+    console.error('❌ Erro ao criar produto:', err);
+    throw new Error('Erro ao criar produto');
   }
 }
 
-
-// Atualizar um produto existente
-async function updateProduto(id, produto) {
-  const { nome, preco, estoque } = produto;
+async function updateProduto(id, { nome, preco, estoque }) {
   try {
-    const [result] = await pool.query('UPDATE produtos SET nome = ?, preco = ?, estoque = ? WHERE id = ?', [nome, preco, estoque, id]);
-    if (result.affectedRows === 0) {
-      throw new Error('Produto não encontrado ou não alterado');
-    }
-    return result;
+    const produto = await Produto.findByPk(id);
+    if (!produto) throw new Error('Produto não encontrado');
+
+    produto.nome = nome;
+    produto.preco = preco;
+    produto.estoque = estoque;
+    await produto.save();
+
+    return produto;
   } catch (err) {
     console.error(`Erro ao atualizar produto com ID ${id}:`, err);
     throw new Error('Erro ao atualizar produto');
   }
 }
 
-// Deletar um produto
 async function deleteProduto(id) {
   try {
-    const [result] = await pool.query('DELETE FROM produtos WHERE id = ?', [id]);
-    if (result.affectedRows === 0) {
-      throw new Error('Produto não encontrado');
-    }
+    const produto = await Produto.findByPk(id);
+    if (!produto) throw new Error('Produto não encontrado');
+
+    await produto.destroy();
   } catch (err) {
     console.error(`Erro ao deletar produto com ID ${id}:`, err);
     throw new Error('Erro ao excluir produto');
@@ -79,9 +79,10 @@ async function deleteProduto(id) {
 }
 
 module.exports = {
+  Produto,
   getAllProdutos,
   getProdutoById,
   createProduto,
   updateProduto,
-  deleteProduto,
+  deleteProduto
 };

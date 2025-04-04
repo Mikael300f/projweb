@@ -27,13 +27,13 @@ async function getAllProdutos(req, res) {
 async function getProdutoById(req, res) {
   let { id } = req.params;
 
-  console.log('ID recebido:', id);  // Depuração
+  console.log('ID recebido:', id);
 
   if (!id || isNaN(id)) {
     return res.status(400).json({ error: 'ID inválido' });
   }
 
-  id = Number(id); // Converte o ID para número antes de enviar ao banco
+  id = Number(id);
 
   try {
     const produto = await produtoModel.getProdutoById(id);
@@ -48,16 +48,16 @@ async function getProdutoById(req, res) {
 }
 
 async function createProduto(req, res) {
-  console.log('Dados recebidos:', req.body); // Verificar os dados recebidos
+  console.log('Dados recebidos:', req.body);
 
   const { nome, preco, estoque } = req.body;
   try {
-    validateProduto({ nome, preco, estoque }); // Validação dos campos
+    validateProduto({ nome, preco, estoque });
     const produtoId = await produtoModel.createProduto({ nome, preco, estoque });
     res.status(201).json({ id: produtoId, nome, preco, estoque });
   } catch (err) {
     console.error('Erro ao criar produto:', err);
-    res.status(400).json({ error: err.message }); // Retorna mensagem de erro específica
+    res.status(400).json({ error: err.message });
   }
 }
 
