@@ -1,30 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Produto</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Cadastro de Produto</h1>
-        <form id="produtoForm" class="form">
-            <input type="text" id="nome" placeholder="Nome do produto" required />
-            <input type="number" id="preco" placeholder="Preço" min="0.01" step="0.01" required />
-            <input type="number" id="estoque" placeholder="Estoque" min="0" required />
-            <button type="submit" class="btn">Cadastrar</button>
+        <h2>Cadastro de Produto</h2>
+        <form id="produtoForm">
+            <label>Nome:</label>
+            <input type="text" id="nome" maxlength="15" required>
+            <br>
+            <label>Preço:</label>
+            <input type="text" id="preco" required placeholder="0,00">
+            <br>
+            <label>Estoque:</label>
+            <input type="number" id="estoque" required>
+            <br>
+            <button type="submit">Cadastrar</button>
+            <button type="button" onclick="voltarHome()">⬅️ Voltar</button>
         </form>
-        <a href="index.html" class="link-voltar">⬅️ Voltar para a Home</a>
-        <p id="mensagem"></p>
     </div>
 
     <script>
+        document.getElementById('preco').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
+            if (value.length === 0) {
+                e.target.value = "0,00";
+                return;
+            }
+            value = (parseInt(value) / 100).toFixed(2).replace(".", ",");
+            e.target.value = value;
+        });
+
+        document.getElementById('estoque').addEventListener('keypress', function (e) {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
         document.getElementById('produtoForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             const nome = document.getElementById('nome').value;
-            const preco = document.getElementById('preco').value;
+            const preco = document.getElementById('preco').value.replace(",", ".");
             const estoque = document.getElementById('estoque').value;
+
+            if (nome.length < 3) {
+                alert("O nome do produto deve ter pelo menos 3 caracteres.");
+                return;
+            }
 
             const response = await fetch('/api/produtos', {
                 method: 'POST',
@@ -32,17 +58,17 @@
                 body: JSON.stringify({ nome, preco, estoque })
             });
 
-            const data = await response.json();
-            const msg = document.getElementById('mensagem');
-            msg.textContent = data.nome ? '✅ Produto cadastrado com sucesso!' : '❌ Erro ao cadastrar.';
-            msg.style.color = data.nome ? 'green' : 'red';
-
-            if (data.nome) {
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
+            if (response.ok) {
+                alert("Produto cadastrado com sucesso!");
+                window.location.href = "index.html"; 
+            } else {
+                alert("Erro ao cadastrar produto.");
             }
         });
+
+        function voltarHome() {
+            window.location.href = "index.html";
+        }
     </script>
 </body>
 </html>

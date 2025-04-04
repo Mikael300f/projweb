@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuário</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Cadastro de Usuário</h1>
-        <form id="usuarioForm" class="form">
-            <input type="text" id="nome" placeholder="Nome" required />
-            <input type="email" id="email" placeholder="Email" required />
-            <input type="password" id="senha" placeholder="Senha" required />
-            <button type="submit" class="btn">Cadastrar</button>
+        <h2>Cadastro de Usuário</h2>
+        <form id="usuarioForm">
+            <label>Nome:</label>
+            <input type="text" id="nome" required>
+            <br>
+            <label>Email:</label>
+            <input type="email" id="email" required>
+            <br>
+            <label>Senha:</label>
+            <input type="password" id="senha" required>
+            <br>
+            <button type="submit">Cadastrar</button>
+            <button type="button" onclick="voltarHome()">⬅️ Voltar</button>
         </form>
-        <a href="index.html" class="link-voltar">⬅️ Voltar para a Home</a>
-        <p id="mensagem"></p>
     </div>
 
     <script>
@@ -26,23 +31,28 @@
             const email = document.getElementById('email').value;
             const senha = document.getElementById('senha').value;
 
+            if (nome.length < 3) {
+                alert("O nome do usuário deve ter pelo menos 3 caracteres.");
+                return;
+            }
+
             const response = await fetch('/api/usuarios', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nome, email, senha })
             });
 
-            const data = await response.json();
-            const msg = document.getElementById('mensagem');
-            msg.textContent = data.nome ? '✅ Usuário cadastrado com sucesso!' : '❌ Erro ao cadastrar.';
-            msg.style.color = data.nome ? 'green' : 'red';
-
-            if (data.nome) {
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
+            if (response.ok) {
+                alert("Usuário cadastrado com sucesso!");
+                window.location.href = "index.html"; 
+            } else {
+                alert("Erro ao cadastrar usuário.");
             }
         });
+
+        function voltarHome() {
+            window.location.href = "index.html";
+        }
     </script>
 </body>
 </html>
