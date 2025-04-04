@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
 Relatório Técnico - Sistema de Gerenciamento de Produtos e Usuários.
 
 O objetivo do projeto é dinamizar o cadastro de Produtos e Usuários para uma empresa, de forma que todos estejam devidamente inseridos no sistema. Além disso, a aplicação também deve permitir a busca dos mesmos em seu banco de dados. Utilizamos Express, Node.JS, Mysql Workbench, Postman, Sequelize e organização do projeto com o MVC(Model, View, Controller) para o funcionamento correto da aplicação.
@@ -23,12 +23,6 @@ Erros e Soluções:
 
 4 - Erro na definição de senha do banco de dados - O banco de dados MySQL rejeitava a conexão devido a problemas na senha do usuário configurado, oque fazia o terminar uma mensagem de erro de credenciais e falha de conexão. Solução: Reinstalamos as dependências do Node.js, corrigimos as credenciais no arquivo .env e garantimos que o servidor MySQL estava rodando corretamente. Também ajustamos os scripts para reiniciar a aplicação corretamente.
 
-REFERÊNCIAS: PEREIRA, Caio Ribeiro. Livro de NodeJS. [S.l.]: Casa do Código, 2013.
-
-NODE.JS padrão MVC - https://medium.com/@habbema/nodejs-padr%C3%A3o-mvc-2f4e16b79cb8;
-
-Documentação MySQL - https://dev.mysql.com/doc/
-
 Validação dos Dados:
 Para garantir a integridade dos dados, foram aplicadas as seguintes regras:
 
@@ -52,4 +46,9 @@ Testes com Postman:
 
 [Teste com Postman.docx](https://github.com/user-attachments/files/19598078/Teste.com.Postman.docx)
 =======
- 
+
+REFERÊNCIAS: PEREIRA, Caio Ribeiro. Livro de NodeJS. [S.l.]: Casa do Código, 2013.
+
+NODE.JS padrão MVC - https://medium.com/@habbema/nodejs-padr%C3%A3o-mvc-2f4e16b79cb8;
+
+Documentação MySQL - https://dev.mysql.com/doc/
