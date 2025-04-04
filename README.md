@@ -1,3 +1,5 @@
+ALUNOS: Mikael Sousa e Sabrina Soares. 2° DSM - MANHÃ.
+ 
  Relatório Técnico - Sistema de Gerenciamento de Produtos e Usuários.
 
  O objetivo do projeto é dinamizar o cadastro de Produtos e Usuários para uma empresa, de forma que todos estejam devidamente inseridos no sistema. Além disso, a aplicação também deve permitir a busca dos mesmos em seu banco de dados.
