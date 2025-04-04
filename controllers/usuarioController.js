@@ -1,40 +1,56 @@
-const usuarioModel = require('../model/usuarioModel');
+const usuarioModel = require('../models/usuarioModel');
 
 async function getAllUsuario(req, res) {
-  const usuario = await produtoModel.getAllUsuario();
-  res.json(usuario);
+  try {
+    const usuarios = await usuarioModel.getAllUsuario();
+    res.status(200).json(usuarios);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao obter usuários' });
+  }
 }
 
 async function getUsuarioById(req, res) {
-  const usuario = await usuarioModel.getUsuarioById(req.params.id);
-  if (usuario) {
-    res.json(usuario);
-  } else {
-    res.status(404).send('usuario não encontrado');
+  const { id } = req.params;
+  try {
+    const usuario = await usuarioModel.getUsuarioById(id);
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+    res.status(200).json(usuario);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao obter usuário' });
   }
 }
 
 async function createUsuario(req, res) {
   const { nome, idade } = req.body;
-  if (!nome || nome.length < 3 || idade <= 0) {
-    return res.status(400).send('Dados inválidos');
+  try {
+    const usuarioId = await usuarioModel.createUsuario({ nome, idade });
+    res.status(201).json({ id: usuarioId, nome, idade });
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao criar usuário' });
   }
-  const id = await usuarioModel.createUsuario(req.body);
-  res.status(201).json({ id });
 }
 
 async function updateUsuario(req, res) {
-  const { nome, idade} = req.body;
-  if (!nome || nome.length < 3 || idade <= 0) {
-    return res.status(400).send('Dados inválidos');
+  const { id } = req.params;
+  const { nome, idade } = req.body;
+  try {
+    await usuarioModel.updateUsuario(id, { nome, idade });
+    res.status(200).json({ id, nome, idade });
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao atualizar usuário' });
   }
-  await usuarioModel.updateUsuario(req.params.id, req.body);
-  res.send('Usuário atualizado');
 }
 
 async function deleteUsuario(req, res) {
-  await usuarioModel.deleteUsuario(req.params.id);
-  res.send('Usuário deletado');
+  const { id } = req.params;
+  try {
+    await usuarioModel.deleteUsuario(id);
+    res.status(204).end();
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao excluir usuário' });
+  }
 }
 
 module.exports = {
@@ -42,5 +58,5 @@ module.exports = {
   getUsuarioById,
   createUsuario,
   updateUsuario,
-  deleteUsuario,
+  deleteUsuario
 };

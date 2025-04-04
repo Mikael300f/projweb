@@ -1,37 +1,22 @@
+require('dotenv').config();
 const express = require('express');
-const app = express();
-const dotenv = require('dotenv');
-const produtoRoutes = require('../projweb/routes/produtoRoutes');
-const usuarioRoutes = require('../projweb/routes/usuarioRoutes');
 const path = require('path');
+const sequelize = require('./config/database');
 
-dotenv.config();
+const produtoRoutes = require('./routes/produtoRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
 
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'src', 'views'));
+const app = express();
 
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/produtos', produtoRoutes);
 app.use('/usuarios', usuarioRoutes);
 
-
-app.get('/cadastro-produto', (req, res) => {
-  res.render('cadastroProduto');
-});
-
-
-app.get('/cadastro-usuario', (req, res) => {
-  res.render('cadastroUsuario');
-});
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
-app.get('/cadastro-produto', (req, res) => {
-    res.render('cadastroProduto');
-  });
+sequelize.sync()
+  .then(() => {
+    app.listen(3000, () => console.log('Servidor rodando na porta 3000'));
+  })
+  .catch(err => console.error('Erro ao sincronizar banco:', err));

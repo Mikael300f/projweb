@@ -29,7 +29,7 @@
       const produto = { nome, preco, estoque };
 
       try {
-        const response = await fetch('/produtos', {
+        const response = await fetch('/api/produtos', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
