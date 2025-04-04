@@ -79,7 +79,7 @@ Testes com Postman:
 
 [Teste com Postman.docx](https://github.com/user-attachments/files/19598078/Teste.com.Postman.docx)
 =======
- 
+ https://docs.google.com/document/d/1dQPDX1DYbpV5rchXbWKBJvwPMuNr4Pn-pclftnSLgU4/edit?usp=drivesdk
 
 REFERÊNCIAS: 
 PEREIRA, Caio Ribeiro. Livro de NodeJS. [S.l.]: Casa
