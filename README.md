@@ -27,3 +27,24 @@ REFERÊNCIAS: PEREIRA, Caio Ribeiro. Livro de NodeJS. [S.l.]: Casa do Código, 2
 NODE.JS padrão MVC - https://medium.com/@habbema/nodejs-padr%C3%A3o-mvc-2f4e16b79cb8;
 
 Documentação MySQL - https://dev.mysql.com/doc/
+
+Validação dos Dados:
+Para garantir a integridade dos dados, foram aplicadas as seguintes regras:
+
+Usuários:
+
+--Nome deve ter pelo menos 3 caracteres.
+
+--Email deve ser válido e único.
+
+Produtos:
+
+--Nome deve ter pelo menos 3 caracteres.
+
+--Preço deve ser um valor positivo.
+
+--Estoque deve ser um número inteiro maior ou igual a zero.
+
+O Sequelize foi configurado para tratar essas validações antes de inserir ou atualizar registros no banco.
+
+Testes com Postman:
