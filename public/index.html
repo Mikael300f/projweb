@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerenciamento de Produtos e Usuários</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📦 Produtos & 👤 Usuários</h1>
+
+        <div class="actions">
+            <a href="cadastroProduto.html" class="btn">➕ Cadastrar Produto</a>
+            <a href="cadastroUsuario.html" class="btn">➕ Cadastrar Usuário</a>
+        </div>
+
+        <h2>📦 Produtos Cadastrados</h2>
+        <table id="tabelaProdutos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Ações</th> <!-- Nova coluna -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Produtos serão carregados aqui -->
+            </tbody>
+        </table>
+
+        <h2>👤 Usuários Cadastrados</h2>
+        <table id="tabelaUsuarios">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Ações</th> <!-- Nova coluna -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Usuários serão carregados aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function carregarDados() {
+            const produtos = await fetch('/api/produtos').then(res => res.json());
+            const usuarios = await fetch('/api/usuarios').then(res => res.json());
+
+            const tabelaProdutos = document.querySelector("#tabelaProdutos tbody");
+            tabelaProdutos.innerHTML = produtos.map(prod => `
+                <tr>
+                    <td>${prod.id}</td>
+                    <td>${prod.nome}</td>
+                    <td>R$ ${parseFloat(prod.preco).toFixed(2)}</td>
+                    <td>${prod.estoque}</td>
+                    <td>
+                        <button class="delete-btn" onclick="removerProduto(${prod.id})">🗑️ Remover</button>
+                    </td>
+                </tr>
+            `).join("");
+
+            const tabelaUsuarios = document.querySelector("#tabelaUsuarios tbody");
+            tabelaUsuarios.innerHTML = usuarios.map(user => `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.nome}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <button class="delete-btn" onclick="removerUsuario(${user.id})">🗑️ Remover</button>
+                    </td>
+                </tr>
+            `).join("");
+        }
+
+        async function removerProduto(id) {
+            if (confirm("Tem certeza que deseja excluir este produto?")) {
+                await fetch(`/api/produtos/${id}`, { method: 'DELETE' });
+                carregarDados(); // Atualiza a lista
+            }
+        }
+
+        async function removerUsuario(id) {
+            if (confirm("Tem certeza que deseja excluir este usuário?")) {
+                await fetch(`/api/usuarios/${id}`, { method: 'DELETE' });
+                carregarDados(); // Atualiza a lista
+            }
+        }
+
+        window.onload = carregarDados;
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Usuário</h1>
+        <form id="usuarioForm" class="form">
+            <input type="text" id="nome" placeholder="Nome" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <input type="password" id="senha" placeholder="Senha" required />
+            <button type="submit" class="btn">Cadastrar</button>
+        </form>
+        <a href="index.html" class="link-voltar">⬅️ Voltar para a Home</a>
+        <p id="mensagem"></p>
+    </div>
+
+    <script>
+        document.getElementById('usuarioForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            const response = await fetch('/api/usuarios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome, email, senha })
+            });
+
+            const data = await response.json();
+            const msg = document.getElementById('mensagem');
+            msg.textContent = data.nome ? '✅ Usuário cadastrado com sucesso!' : '❌ Erro ao cadastrar.';
+            msg.style.color = data.nome ? 'green' : 'red';
+
+            if (data.nome) {
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
